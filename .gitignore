@@ -29,7 +29,6 @@ next-env.d.ts
 # ---------------------------------------------------------------------------
 # Environment and secrets — keep .env.example as the template
 # ---------------------------------------------------------------------------
-.env*
 !.env.example
 *.pem
 *.key
@@ -77,7 +76,6 @@ yarn-error.log*
 # ---------------------------------------------------------------------------
 # Editors and OS
 # ---------------------------------------------------------------------------
-.vscode/*
 !.vscode/extensions.json
 .idea/
 *.swp
@@ -85,3 +83,4 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 desktop.ini
+config.bat
