@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 
+import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 
@@ -23,7 +24,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="globe-first">
         {children}
-        {/* Vercel Web Analytics: page views and visitors; a no-op outside Vercel deployments. */}
         <Analytics />
       </body>
     </html>
