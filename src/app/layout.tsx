@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 
 import { siteConfig } from "@/config/site";
@@ -20,7 +21,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/vendor/cesium/Widgets/widgets.css" />
       </head>
-      <body className="globe-first">{children}</body>
+      <body className="globe-first">
+        {children}
+        {/* Vercel Web Analytics: page views and visitors; a no-op outside Vercel deployments. */}
+        <Analytics />
+      </body>
     </html>
   );
 }
