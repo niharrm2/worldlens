@@ -1,0 +1,11 @@
+/* Globe-first layout: side panels stay hidden until opened by the user. */
+body.globe-first:not(.directory-open) .directory,
+body.globe-first:not(.detail-open) .app > .viewer,
+body.globe-first:not(.detail-open) .app > .satellite-viewer,
+body.globe-first:not(.detail-open) .app > .flight-viewer {
+  display: none !important;
+}
+
+dialog:not([open]) {
+  display: none !important;
+}

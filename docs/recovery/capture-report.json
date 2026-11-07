@@ -1,0 +1,87 @@
+{
+  "captured_resources": 27,
+  "catalog_cameras": 4506,
+  "atlas_added_records": 211652,
+  "satellite_records": 16766,
+  "missing_initial_html_resource_links": [
+    "worldlens-source.zip"
+  ],
+  "javascript_syntax_checks": [
+    {
+      "file": "aircraft-icons.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "atlas-data.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "camera-core.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "feed-icons.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "flight-layer.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "flights-ui.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "globe-fallback.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "globe-layer.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "globe-shell.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "satellite-core.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "satellite-ui.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "satellite-worker.js",
+      "passed": true,
+      "error": null
+    },
+    {
+      "file": "worldlens.js",
+      "passed": true,
+      "error": null
+    }
+  ],
+  "flight_provider": "adsb.lol",
+  "captured_flight_request_status": 503,
+  "remaining": [
+    "atlas/details/0.json through atlas/details/229.json",
+    "icons/aircraft-live.png",
+    "icons/aircraft-selected.png",
+    "icons/aircraft-stale.png",
+    "vendor/countries.geojson",
+    "Cesium resources not requested in the captured session",
+    "A successful /api/flights response or a separately implemented direct adsb.lol integration"
+  ]
+}

@@ -1,0 +1,283 @@
+import type { GlyphId } from "@/lib/icons/map-glyphs";
+import type { EarthDataId, EarthLayerId } from "@/types/earth";
+
+export interface EarthLayerDef {
+  id: EarthLayerId;
+  title: string;
+  description: string;
+  /** Dataset the layer is drawn from. */
+  data: EarthDataId;
+  /** How often the browser re-requests the (server-cached) dataset. */
+  refreshMs: number;
+  source: { name: string; url: string };
+  freshness: string;
+  /** Colour shown next to the toggle. */
+  swatch: string;
+  /** Symbol used for the layer's markers and beside its switch. */
+  glyph: GlyphId;
+  group?: "planet" | "movement";
+  /** Computed in the browser; nothing to download. */
+  local?: boolean;
+  /** Other datasets the layer also draws from (e.g. solar storms → aurora oval). */
+  extraData?: EarthDataId[];
+  /** Shown when the source is known to be unreachable from some networks, etc. */
+  note?: string;
+}
+
+const MIN = 60_000;
+
+export const EARTH_LAYERS: EarthLayerDef[] = [
+  {
+    id: "earthquakes",
+    glyph: "quake",
+    title: "Earthquakes",
+    description: "Past 24 hours. Size = magnitude, colour = depth; quakes in the last hour pulse.",
+    data: "earthquakes",
+    refreshMs: MIN,
+    source: { name: "USGS", url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" },
+    freshness: "Feed updates every minute",
+    swatch: "#ff5a3c",
+  },
+  {
+    id: "fires",
+    glyph: "fire",
+    title: "Wildfires & heat hotspots",
+    description: "Satellite thermal detections in the past 24 hours, grouped into 0.25° cells by fire radiative power.",
+    data: "fires",
+    refreshMs: 30 * MIN,
+    source: { name: "NASA FIRMS · VIIRS NOAA-20", url: "https://firms.modaps.eosdis.nasa.gov/" },
+    freshness: "Near-real-time, within ~3 hours of the satellite pass",
+    swatch: "#ff9f1c",
+  },
+  {
+    id: "weather",
+    glyph: "wind",
+    title: "Weather & wind",
+    description: "Animated surface wind with temperature or sea-level pressure shading on a 10° global grid.",
+    data: "weather",
+    refreshMs: 30 * MIN,
+    source: { name: "Open-Meteo", url: "https://open-meteo.com/" },
+    freshness: "Model analysis in 15-minute steps; sampled every 3 hours",
+    swatch: "#3fc6ff",
+  },
+  {
+    id: "airquality",
+    glyph: "particles",
+    title: "Air quality",
+    description: "US AQI, PM2.5, dust or ozone on a 15° global grid.",
+    data: "airquality",
+    refreshMs: 30 * MIN,
+    source: { name: "Open-Meteo · CAMS", url: "https://open-meteo.com/en/docs/air-quality-api" },
+    freshness: "Hourly model forecast, not live sensors; sampled every 4 hours",
+    swatch: "#ffe600",
+  },
+  {
+    id: "clouds",
+    glyph: "cloud",
+    title: "Satellite cloud imagery",
+    description: "True-colour daily mosaic wrapped around the globe, with a 7-day slider.",
+    data: "imagery",
+    refreshMs: 60 * MIN,
+    source: { name: "NASA GIBS · VIIRS NOAA-20", url: "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api" },
+    freshness: "Today's mosaic fills in as the satellite passes; ~3.5 h latency",
+    swatch: "#e9f2f7",
+  },
+  {
+    id: "rainfall",
+    glyph: "rain",
+    title: "Rainfall",
+    description: "Animated half-hourly precipitation rate over the most recent four hours available.",
+    data: "imagery",
+    refreshMs: 60 * MIN,
+    source: { name: "NASA GPM IMERG via GIBS", url: "https://gpm.nasa.gov/data/imerg" },
+    freshness: "Half-hourly estimates, published ~4–6 hours after observation",
+    swatch: "#3a8fe0",
+  },
+  {
+    id: "aurora",
+    glyph: "aurora",
+    title: "Aurora",
+    description: "Forecast probability of visible aurora, drawn as glowing bands at 110 km altitude.",
+    data: "aurora",
+    refreshMs: 5 * MIN,
+    source: { name: "NOAA SWPC OVATION", url: "https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" },
+    freshness: "Forecast 30–90 minutes ahead",
+    swatch: "#39ff88",
+  },
+  {
+    id: "events",
+    glyph: "storm",
+    title: "Natural disaster events",
+    description: "Open storms, volcanoes, floods, wildfires, ice and more, with each event's timeline.",
+    data: "events",
+    refreshMs: 10 * MIN,
+    source: { name: "NASA EONET", url: "https://eonet.gsfc.nasa.gov/" },
+    freshness: "Continuously updated; depends on each reporting source",
+    swatch: "#7aa7ff",
+  },
+  {
+    id: "ocean",
+    glyph: "wave",
+    title: "Ocean waves & currents",
+    description: "Significant wave height shading with surface-current arrows on a 10° grid.",
+    data: "ocean",
+    refreshMs: 30 * MIN,
+    source: { name: "Open-Meteo Marine", url: "https://open-meteo.com/en/docs/marine-weather-api" },
+    freshness: "Hourly model values; sampled every 4 hours",
+    swatch: "#2b8fe0",
+  },
+  {
+    id: "buoys",
+    glyph: "buoy",
+    title: "Ocean buoy observations",
+    description: "Measured wind, waves, pressure and water temperature from moored buoys and stations.",
+    data: "buoys",
+    refreshMs: 10 * MIN,
+    source: { name: "NOAA NDBC", url: "https://www.ndbc.noaa.gov/" },
+    freshness: "Real-time station reports; intervals vary by station",
+    swatch: "#ffe08a",
+  },
+  {
+    id: "news",
+    glyph: "news",
+    title: "Live news map",
+    description: "Recent headlines placed where the news is — click a marker for the articles.",
+    data: "news",
+    refreshMs: 15 * MIN,
+    source: { name: "GDELT Project", url: "https://www.gdeltproject.org/" },
+    freshness: "Near-real-time, every 15 minutes; falls back to grouping by publishing country",
+    swatch: "#ffb347",
+  },
+  {
+    id: "outages",
+    glyph: "outage",
+    title: "Internet outages",
+    description: "Countries with detected connectivity drops in the past 24 hours, sized by severity.",
+    data: "outages",
+    refreshMs: 5 * MIN,
+    source: { name: "IODA · Georgia Tech", url: "https://ioda.inetintel.cc.gatech.edu/" },
+    freshness: "Near-real-time outage detection (BGP, active probing, telescope)",
+    swatch: "#ff5a5a",
+  },
+  {
+    id: "daynight",
+    glyph: "sun",
+    title: "Day & night",
+    description: "Live sunlight with the day/night line and the point where the sun is overhead. Click anywhere for sunrise, sunset and local time.",
+    data: "imagery",
+    local: true,
+    refreshMs: 0,
+    source: { name: "Calculated (NOAA solar algorithm)", url: "https://gml.noaa.gov/grad/solcalc/" },
+    freshness: "Calculated continuously — no external feed",
+    swatch: "#ffd36b",
+  },
+  {
+    id: "solar",
+    glyph: "solar",
+    title: "Solar storms",
+    description: "Live solar wind, magnetic field, Kp index and NOAA storm scales, with the aurora oval.",
+    data: "solar",
+    extraData: ["aurora"],
+    refreshMs: MIN,
+    source: { name: "NOAA SWPC", url: "https://www.swpc.noaa.gov/" },
+    freshness: "1-minute real-time solar wind (L1 spacecraft); 3-hour Kp",
+    swatch: "#ff9f6b",
+  },
+  {
+    id: "oceanheat",
+    glyph: "heat",
+    title: "Ocean heat",
+    description: "Sea-surface temperature anomaly, coral-bleaching heat stress or temperature, with a 7-day slider. Click the ocean for values.",
+    data: "oceanheat",
+    refreshMs: 3 * 60 * MIN,
+    source: { name: "NOAA Coral Reef Watch", url: "https://coralreefwatch.noaa.gov/" },
+    freshness: "Daily global 5 km product, ~1–2 days behind",
+    swatch: "#ff6b6b",
+  },
+  {
+    id: "seaice",
+    glyph: "ice",
+    title: "Polar sea ice",
+    description: "Arctic and Antarctic sea-ice cover with a date slider, and today's extent versus the 1981–2010 median.",
+    data: "seaice",
+    refreshMs: 3 * 60 * MIN,
+    source: { name: "NSIDC Sea Ice Index · NASA GIBS", url: "https://nsidc.org/data/seaice_index" },
+    freshness: "Daily; extent from NSIDC, ice imagery from GHRSST MUR",
+    swatch: "#bfefff",
+  },
+  {
+    id: "balloons",
+    glyph: "balloon",
+    group: "movement",
+    title: "Weather balloons",
+    description: "Radiosondes rising into the stratosphere, drawn at their real altitude. Select one for its flight trail.",
+    data: "balloons",
+    refreshMs: MIN,
+    source: { name: "SondeHub", url: "https://sondehub.org/" },
+    freshness: "Live community-received telemetry; coverage depends on volunteer receivers",
+    swatch: "#7ff6ff",
+  },
+  {
+    id: "trains",
+    glyph: "train",
+    group: "movement",
+    title: "Trains",
+    description: "Every passenger and freight train in Finland, coloured by delay, with route and next station.",
+    data: "trains",
+    refreshMs: 20_000,
+    source: { name: "Fintraffic Digitraffic rail", url: "https://www.digitraffic.fi/en/railway-traffic/" },
+    freshness: "GPS positions every few seconds; Finland only (CC BY 4.0)",
+    swatch: "#4fe07a",
+  },
+  {
+    id: "transit",
+    glyph: "bus",
+    group: "movement",
+    title: "Buses & trams",
+    description: "Live public-transport vehicles from open GTFS-Realtime feeds: Helsinki, Boston and South East Queensland.",
+    data: "transit",
+    refreshMs: 20_000,
+    source: { name: "GTFS-Realtime (HSL, MBTA, Translink)", url: "https://gtfs.org/documentation/realtime/reference/" },
+    freshness: "Vehicle positions every ~10–30 s; more cities can be added server-side",
+    swatch: "#ff8fd1",
+  },
+  {
+    id: "gliders",
+    glyph: "glider",
+    group: "movement",
+    title: "Gliders & light aircraft",
+    description: "FLARM/OGN-tracked gliders, paragliders, tow planes and light aircraft at their real altitude, with climb rate.",
+    data: "gliders",
+    refreshMs: 15_000,
+    source: { name: "Open Glider Network (ODbL)", url: "https://www.glidernet.org/" },
+    freshness: "Live, receiver-dependent coverage; opted-out pilots are never shown",
+    swatch: "#ffe066",
+  },
+  {
+    id: "bikes",
+    glyph: "bike",
+    group: "movement",
+    title: "Shared bikes & scooters",
+    description: "Docking-station availability and parked free-floating vehicles from open GBFS feeds in ten systems.",
+    data: "bikes",
+    refreshMs: 2 * MIN,
+    source: { name: "GBFS (operator feeds)", url: "https://github.com/MobilityData/gbfs" },
+    freshness: "Live availability; parked vehicles only — no ride tracking",
+    swatch: "#4fd1c5",
+  },
+  {
+    id: "launches",
+    glyph: "rocket",
+    group: "movement",
+    title: "Rocket launches",
+    description: "Upcoming launches at their pads, with countdowns, mission status and webcast links.",
+    data: "launches",
+    refreshMs: 30 * MIN,
+    source: { name: "The Space Devs · Launch Library 2", url: "https://thespacedevs.com/llapi" },
+    freshness: "Schedule data, not live rocket telemetry; free tier ≈15 requests/hour",
+    swatch: "#ffd36b",
+  },
+];
+
+export const EARTH_LAYER_IDS = EARTH_LAYERS.map((l) => l.id);
+export const layerDef = (id: EarthLayerId) => EARTH_LAYERS.find((l) => l.id === id)!;

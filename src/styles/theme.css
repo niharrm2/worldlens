@@ -1,0 +1,1112 @@
+/*
+ * WorldLens panel theme — loaded last. One visual language for the side explorer, every
+ * detail card and the dialogs: frosted-glass surfaces, readable type, consistent controls.
+ */
+:root {
+  --wl-surface: rgba(10, 20, 30, 0.84);
+  --wl-surface-strong: rgba(13, 25, 37, 0.96);
+  --wl-raised: rgba(255, 255, 255, 0.04);
+  --wl-raised-hover: rgba(255, 255, 255, 0.075);
+  --wl-border: rgba(150, 200, 230, 0.14);
+  --wl-border-strong: rgba(150, 200, 230, 0.26);
+  --wl-text: #e8f1f6;
+  --wl-text-2: #a9bcc8;
+  --wl-text-3: #7d92a0;
+  --wl-accent: #5fd4c4;
+  --wl-accent-soft: rgba(95, 212, 196, 0.14);
+  --wl-radius: 20px;
+  --wl-radius-sm: 12px;
+  --wl-shadow: 0 24px 70px rgba(0, 6, 14, 0.55), 0 2px 0 rgba(255, 255, 255, 0.03) inset;
+  --wl-font: "DM Sans", system-ui, sans-serif;
+  --wl-display: Manrope, "DM Sans", system-ui, sans-serif;
+}
+
+@keyframes wl-slide-left {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes wl-slide-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes wl-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes wl-pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Shared panel surface ---------------------------------------------------- */
+
+.globe-first.directory-open .directory,
+.globe-first.detail-open .app > .viewer,
+.globe-first.detail-open .app > .satellite-viewer,
+.globe-first.detail-open .app > .flight-viewer,
+.globe-first.detail-open .app > .ship-viewer,
+.globe-first.detail-open .app > .earth-viewer {
+  border: 1px solid var(--wl-border) !important;
+  border-radius: var(--wl-radius) !important;
+  background: var(--wl-surface) !important;
+  backdrop-filter: blur(28px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(140%) !important;
+  box-shadow: var(--wl-shadow) !important;
+  color: var(--wl-text);
+  font-family: var(--wl-font);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 200, 230, 0.25) transparent;
+}
+
+/* Side explorer (left) */
+.globe-first.directory-open .directory {
+  inset: 16px auto 104px 16px !important;
+  width: min(392px, calc(100vw - 32px)) !important;
+  animation: wl-slide-left 0.22s ease-out;
+}
+
+/* Detail cards (right) */
+.globe-first.detail-open .app > .viewer,
+.globe-first.detail-open .app > .satellite-viewer,
+.globe-first.detail-open .app > .flight-viewer,
+.globe-first.detail-open .app > .ship-viewer,
+.globe-first.detail-open .app > .earth-viewer {
+  inset: 16px 84px 104px auto !important;
+  width: min(392px, calc(100vw - 32px)) !important;
+  padding: 26px 24px 24px !important;
+  animation: wl-slide-right 0.22s ease-out;
+}
+
+/* ---- Close buttons -------------------------------------------------------------- */
+
+.shell-close,
+dialog .close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--wl-border);
+  border-radius: 50%;
+  background: var(--wl-raised);
+  color: var(--wl-text-2);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  z-index: 15;
+}
+dialog .close {
+  position: static;
+  flex: none;
+}
+.shell-close:hover,
+dialog .close:hover {
+  background: var(--wl-raised-hover);
+  color: var(--wl-text);
+  transform: rotate(90deg);
+}
+
+/* ---- Typography ------------------------------------------------------------------ */
+
+.directory .eyebrow,
+.app > aside .eyebrow,
+.app > .viewer .eyebrow,
+dialog .eyebrow {
+  font: 600 10.5px/1.4 var(--wl-font);
+  letter-spacing: 1.6px;
+  color: var(--wl-accent);
+  text-transform: uppercase;
+}
+
+.directory .directoryhead {
+  padding: 26px 24px 4px !important;
+}
+.directory .directoryhead h1 {
+  display: block !important;
+  margin: 10px 0 8px;
+  font: 700 26px/1.15 var(--wl-display);
+  letter-spacing: -0.4px;
+  color: var(--wl-text);
+}
+.directory .directoryhead h1 br {
+  display: inline !important;
+}
+.directory .directoryhead h1 span {
+  color: var(--wl-text-3);
+}
+.directory .directoryhead > p {
+  display: block !important;
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--wl-text-2);
+}
+
+.app > aside h2,
+.app > .viewer h2 {
+  font: 700 22px/1.3 var(--wl-display) !important;
+  letter-spacing: -0.2px;
+  color: var(--wl-text);
+  margin: 12px 44px 6px 0;
+  overflow-wrap: anywhere;
+}
+
+.sat-explanation,
+.feednote,
+.app > aside p {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: var(--wl-text-2) !important;
+}
+
+.flight-status,
+.earth-status,
+.sat-clock {
+  font: 11.5px/1.65 ui-monospace, "SFMono-Regular", Menlo, monospace !important;
+  color: #9fd2cb !important;
+}
+
+.sectionlabel {
+  font: 600 10.5px/1.4 var(--wl-font) !important;
+  letter-spacing: 1.4px;
+  color: var(--wl-text-3) !important;
+}
+
+/* ---- Counters, search and filters ------------------------------------------------- */
+
+.catalogstats,
+.sat-counters {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 4px 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--wl-border);
+  border-radius: var(--wl-radius-sm);
+  background: var(--wl-raised);
+}
+.catalogstats strong,
+.sat-counters strong {
+  font: 700 20px/1 var(--wl-display);
+  color: var(--wl-text);
+}
+.catalogstats span,
+.sat-counters span {
+  font-size: 12px;
+  color: var(--wl-text-2);
+}
+
+.directory .searchbox {
+  padding: 11px 14px;
+  border: 1px solid var(--wl-border);
+  border-radius: var(--wl-radius-sm);
+  background: rgba(0, 0, 0, 0.22);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.directory .searchbox:focus-within {
+  border-color: var(--wl-accent);
+  box-shadow: 0 0 0 3px var(--wl-accent-soft);
+}
+.directory .searchbox input {
+  font-size: 13.5px !important;
+  color: var(--wl-text) !important;
+}
+.directory .searchbox > span {
+  font-size: 18px;
+  color: var(--wl-text-3);
+}
+
+.filtertabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 12px 0 4px;
+}
+.filtertabs button {
+  padding: 7px 12px;
+  border: 1px solid var(--wl-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--wl-text-2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.filtertabs button:hover {
+  background: var(--wl-raised-hover);
+  color: var(--wl-text);
+}
+.filtertabs button.selected {
+  border-color: transparent;
+  background: var(--wl-accent);
+  color: #062420;
+  font-weight: 600;
+}
+
+.directory select,
+.app > aside select,
+dialog select,
+dialog input:not([type="checkbox"]):not([type="file"]) {
+  padding: 10px 12px !important;
+  border: 1px solid var(--wl-border) !important;
+  border-radius: 10px !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  color: var(--wl-text) !important;
+  font: 13px var(--wl-font) !important;
+}
+.directory select:focus,
+dialog select:focus,
+dialog input:focus {
+  outline: none;
+  border-color: var(--wl-accent) !important;
+  box-shadow: 0 0 0 3px var(--wl-accent-soft);
+}
+
+.directory label,
+.sat-cameras,
+.sat-filterlabel {
+  font-size: 12.5px !important;
+  color: var(--wl-text-2) !important;
+}
+.directory input[type="checkbox"],
+.app > aside input[type="checkbox"],
+dialog input[type="checkbox"] {
+  accent-color: var(--wl-accent);
+  width: 15px;
+  height: 15px;
+  vertical-align: -2px;
+}
+
+.listheading {
+  padding: 14px 24px 8px !important;
+  font-size: 12px !important;
+  color: var(--wl-text-3) !important;
+  border-top: 1px solid var(--wl-border);
+}
+.listheading button {
+  font-size: 12px !important;
+  color: var(--wl-accent) !important;
+  cursor: pointer;
+}
+
+/* ---- Lists ----------------------------------------------------------------------- */
+
+.directory .cameralist {
+  padding: 4px 12px 14px !important;
+}
+
+.cameracard,
+.sat-row {
+  margin: 3px 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--wl-radius-sm) !important;
+  background: transparent;
+  color: var(--wl-text) !important;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cameracard:hover,
+.sat-row:hover {
+  background: var(--wl-raised-hover) !important;
+}
+.cameracard.selected,
+.sat-row.selected {
+  border-color: rgba(95, 212, 196, 0.45) !important;
+  background: var(--wl-accent-soft) !important;
+}
+.cameracard strong,
+.sat-row strong {
+  font: 600 13.5px/1.35 var(--wl-display) !important;
+}
+.cameracard small,
+.sat-row small,
+.cameracard .provider {
+  font-size: 11.5px !important;
+  line-height: 1.45;
+  color: var(--wl-text-3) !important;
+}
+.cardarrow,
+.sat-row > span:last-child {
+  color: var(--wl-text-3);
+}
+
+.loadmore {
+  width: 100%;
+  margin-top: 8px;
+  padding: 11px;
+  border: 1px dashed var(--wl-border-strong);
+  border-radius: var(--wl-radius-sm);
+  background: transparent;
+  color: var(--wl-accent);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.loadmore:hover {
+  background: var(--wl-accent-soft);
+}
+
+.empty {
+  padding: 28px 12px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--wl-text-3);
+}
+
+.directoryfoot,
+.sat-datafooter {
+  padding: 14px 24px 18px !important;
+  border-top: 1px solid var(--wl-border);
+  font-size: 12px !important;
+  line-height: 1.6;
+  color: var(--wl-text-3) !important;
+}
+.sat-datafooter a,
+.directoryfoot a {
+  color: var(--wl-accent);
+}
+
+/* ---- Buttons ----------------------------------------------------------------------- */
+
+.app > aside .button,
+.directory .button,
+dialog .button {
+  padding: 10px 16px;
+  border: 1px solid var(--wl-border-strong);
+  border-radius: 10px;
+  background: var(--wl-raised);
+  color: var(--wl-text);
+  font: 600 12.5px var(--wl-font);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, border-color 0.15s;
+}
+.app > aside .button:hover,
+.directory .button:hover,
+dialog .button:hover {
+  background: var(--wl-raised-hover);
+  border-color: var(--wl-accent);
+}
+.app > aside .button:active,
+dialog .button:active {
+  transform: scale(0.98);
+}
+.app > aside .button.primary,
+.directory .button.primary,
+dialog .button.primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, #5fd4c4, #4aa8e0);
+  color: #04201d;
+}
+.app > aside .button.primary:hover,
+dialog .button.primary:hover {
+  filter: brightness(1.08);
+}
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.sat-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.sourcelink {
+  display: inline-flex;
+  margin-top: 10px;
+  color: var(--wl-accent) !important;
+  font-size: 13px;
+  text-decoration: none;
+}
+.sourcelink:hover {
+  text-decoration: underline;
+}
+
+/* ---- Detail-card metrics ------------------------------------------------------------- */
+
+.sat-metrics {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px !important;
+  margin: 16px 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.sat-metrics > div {
+  padding: 11px 12px;
+  border: 1px solid var(--wl-border);
+  border-radius: var(--wl-radius-sm);
+  background: var(--wl-raised);
+  min-width: 0;
+}
+.sat-metrics span {
+  margin-bottom: 5px !important;
+  font: 600 10px/1.3 var(--wl-font) !important;
+  letter-spacing: 1.1px !important;
+  color: var(--wl-text-3) !important;
+}
+.sat-metrics strong {
+  display: block;
+  font: 600 15.5px/1.3 var(--wl-display) !important;
+  color: var(--wl-text) !important;
+  overflow-wrap: anywhere;
+}
+.sat-metrics strong.stale {
+  color: #f0b878 !important;
+}
+
+.viewerdetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.viewerdetails > div {
+  padding: 10px 12px;
+  border: 1px solid var(--wl-border);
+  border-radius: var(--wl-radius-sm);
+  background: var(--wl-raised);
+}
+.viewerdetails span {
+  font: 600 10px var(--wl-font);
+  letter-spacing: 1.1px;
+  color: var(--wl-text-3);
+}
+.viewerdetails strong {
+  display: block;
+  margin-top: 4px;
+  font: 600 13px/1.35 var(--wl-display);
+  overflow-wrap: anywhere;
+}
+
+.app > .viewer .player {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--wl-border);
+}
+.playbackstatus {
+  font-size: 12px;
+  color: var(--wl-text-2);
+}
+
+.flight-hero {
+  border-color: var(--wl-border) !important;
+  border-radius: 22px !important;
+}
+
+/* ---- Earth layer cards ------------------------------------------------------------- */
+
+.earth-layer {
+  border-color: var(--wl-border) !important;
+  border-radius: var(--wl-radius-sm) !important;
+  background: var(--wl-raised) !important;
+  transition: border-color 0.15s, background 0.15s;
+}
+.earth-layer:hover {
+  background: var(--wl-raised-hover) !important;
+}
+.earth-layer.on {
+  border-color: rgba(95, 212, 196, 0.4) !important;
+  background: var(--wl-accent-soft) !important;
+}
+.earth-layer p {
+  font-size: 12px !important;
+}
+.earth-toggle strong {
+  font: 600 14px var(--wl-display) !important;
+}
+
+/* ---- Dialogs --------------------------------------------------------------------------- */
+
+dialog {
+  padding: 28px !important;
+  border: 1px solid var(--wl-border-strong) !important;
+  border-radius: 24px !important;
+  background: var(--wl-surface-strong) !important;
+  color: var(--wl-text) !important;
+  font-family: var(--wl-font);
+  box-shadow: 0 40px 120px rgba(0, 6, 14, 0.7) !important;
+  scrollbar-width: thin;
+}
+dialog[open] {
+  animation: wl-pop 0.2s ease-out;
+}
+dialog::backdrop {
+  background: rgba(3, 10, 18, 0.62) !important;
+  backdrop-filter: blur(8px);
+}
+dialog .dialoghead {
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--wl-border);
+}
+dialog .dialoghead h2 {
+  margin: 6px 0 0;
+  font: 700 22px/1.25 var(--wl-display);
+}
+dialog .intro,
+dialog .hint {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--wl-text-2);
+}
+dialog label:not(.filelabel):not(.checklabel) {
+  font-size: 12.5px !important;
+  color: var(--wl-text-2) !important;
+}
+dialog .error {
+  color: #ff8a80;
+  font-size: 13px;
+}
+.auditbox,
+.sourcecard {
+  border: 1px solid var(--wl-border) !important;
+  border-radius: var(--wl-radius-sm) !important;
+  background: var(--wl-raised) !important;
+}
+
+/* ---- Dock ------------------------------------------------------------------------------ */
+
+.globe-dock {
+  padding: 7px 10px !important;
+  border: 1px solid var(--wl-border) !important;
+  border-radius: 22px !important;
+  background: var(--wl-surface) !important;
+  backdrop-filter: blur(28px) saturate(140%) !important;
+  box-shadow: var(--wl-shadow) !important;
+}
+.globe-dock button {
+  border-radius: 14px !important;
+  color: var(--wl-text-2) !important;
+  font: 500 12px var(--wl-font) !important;
+  transition: background 0.15s, color 0.15s;
+}
+.globe-dock button:hover {
+  background: var(--wl-raised-hover) !important;
+  color: var(--wl-text) !important;
+}
+.globe-dock button[aria-pressed="true"] {
+  background: var(--wl-accent-soft) !important;
+  color: var(--wl-accent) !important;
+  box-shadow: inset 0 0 0 1px rgba(95, 212, 196, 0.35);
+}
+
+#toast {
+  border: 1px solid var(--wl-border-strong);
+  border-radius: 14px;
+  background: var(--wl-surface-strong);
+  backdrop-filter: blur(20px);
+  font-size: 13px;
+}
+
+.globehover {
+  padding: 7px 11px !important;
+  border: 1px solid var(--wl-border-strong) !important;
+  border-radius: 10px !important;
+  background: var(--wl-surface-strong) !important;
+  color: var(--wl-text) !important;
+  font: 500 12.5px var(--wl-font) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Phones: bottom sheets ------------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .globe-first.directory-open .directory,
+  .globe-first.detail-open .app > .viewer,
+  .globe-first.detail-open .app > .satellite-viewer,
+  .globe-first.detail-open .app > .flight-viewer,
+  .globe-first.detail-open .app > .ship-viewer,
+  .globe-first.detail-open .app > .earth-viewer {
+    inset: auto 8px 84px 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: min(62dvh, calc(100dvh - 120px));
+    border-radius: 22px !important;
+    animation: wl-rise 0.24s ease-out;
+  }
+  .globe-first.directory-open .directory {
+    height: min(62dvh, calc(100dvh - 120px)) !important;
+  }
+  .directory .directoryhead > p {
+    display: none !important;
+  }
+  .directory .directoryhead h1 {
+    font-size: 22px;
+  }
+  dialog {
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-first.directory-open .directory,
+  .globe-first.detail-open .app > aside,
+  dialog[open] {
+    animation: none !important;
+  }
+}
+
+/* ---- Panel button (opens the current layer's side panel) ------------------------------- */
+
+.panel-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px 11px 13px;
+  border: 1px solid var(--wl-border);
+  border-radius: 999px;
+  background: var(--wl-surface);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow: var(--wl-shadow);
+  color: var(--wl-text);
+  font: 600 13px var(--wl-font);
+  cursor: pointer;
+  animation: wl-pop 0.18s ease-out;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.panel-button[hidden] {
+  display: none;
+}
+.panel-button:hover {
+  border-color: var(--wl-accent);
+  background: var(--wl-surface-strong);
+}
+.panel-button:active {
+  transform: scale(0.97);
+}
+.panel-button:focus-visible {
+  outline: 2px solid var(--wl-accent);
+  outline-offset: 3px;
+}
+.panel-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--wl-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Live status badges move to the top centre so they never sit under the panel button. */
+.flight-livebadge {
+  left: 50% !important;
+  top: 20px !important;
+  transform: translateX(-50%);
+  border: 1px solid var(--wl-border) !important;
+  background: var(--wl-surface) !important;
+  backdrop-filter: blur(20px);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .panel-button {
+    top: 12px;
+    left: 12px;
+    padding: 9px 14px 9px 11px;
+    font-size: 12px;
+  }
+  .flight-livebadge {
+    top: 62px !important;
+  }
+}
+
+/* ---- Earth layer switches -------------------------------------------------------------- */
+
+.earth-group {
+  margin-bottom: 6px;
+}
+.earth-group-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 2px 6px;
+}
+.earth-group-head .sectionlabel {
+  flex: 1;
+  margin: 0 !important;
+}
+.earth-group-head button {
+  padding: 5px 10px;
+  border: 1px solid var(--wl-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--wl-accent);
+  font: 600 11px var(--wl-font);
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+.earth-group-head button:hover:not(:disabled) {
+  background: var(--wl-accent-soft);
+}
+.earth-group-head button:disabled {
+  color: var(--wl-text-3);
+  opacity: 0.45;
+  cursor: default;
+}
+
+.earth-layer-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.earth-layer-head strong {
+  flex: 1;
+  min-width: 0;
+  font: 600 14px var(--wl-display);
+  color: var(--wl-text);
+}
+.earth-swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px currentColor;
+}
+.earth-layer:not(.on) .earth-swatch {
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.wl-switch {
+  position: relative;
+  flex: none;
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--wl-border-strong);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+}
+.wl-switch span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #c9d6de;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, background 0.18s;
+}
+.wl-switch[aria-checked="true"] {
+  border-color: transparent;
+  background: linear-gradient(135deg, #5fd4c4, #4aa8e0);
+}
+.wl-switch[aria-checked="true"] span {
+  transform: translateX(18px);
+  background: #fff;
+}
+.wl-switch:focus-visible {
+  outline: 2px solid var(--wl-accent);
+  outline-offset: 2px;
+}
+
+/* Earth panel: the footnote scrolls with the layer list; compact header on short screens. */
+.earth-layers .sat-datafooter {
+  margin: 10px -16px -12px;
+  border-top: 1px solid var(--wl-border);
+}
+@media (max-width: 760px), (max-height: 640px) {
+  .earth-directory .sat-counters {
+    display: none;
+  }
+}
+
+/* ---- Layer glyphs and legend badges ---------------------------------------------------- */
+
+.earth-glyph {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid currentColor;
+  border-radius: 9px;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  transition: opacity 0.15s;
+}
+.earth-glyph svg {
+  width: 18px;
+  height: 18px;
+}
+.earth-layer:not(.on) .earth-glyph {
+  opacity: 0.5;
+}
+.earth-swatches .earth-badge {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  vertical-align: -5px;
+}
+
+/* ---- Top loader -------------------------------------------------------------------------- */
+
+@keyframes wl-loader-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+@keyframes wl-spin {
+  to { transform: rotate(360deg); }
+}
+
+.top-loader {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.top-loader.on {
+  opacity: 1;
+}
+.top-loader-bar {
+  position: relative;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(95, 212, 196, 0.12);
+}
+.top-loader-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, #5fd4c4, #4aa8e0, transparent);
+  animation: wl-loader-slide 1.1s ease-in-out infinite;
+}
+.top-loader-pill {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: calc(100vw - 32px);
+  padding: 8px 14px 8px 11px;
+  border: 1px solid var(--wl-border);
+  border-radius: 999px;
+  background: var(--wl-surface-strong);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color: var(--wl-text);
+  font: 500 12.5px var(--wl-font);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: translate(-50%, -6px);
+  transition: transform 0.25s ease;
+}
+.top-loader.on .top-loader-pill {
+  transform: translate(-50%, 0);
+}
+.top-loader-spinner {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(95, 212, 196, 0.25);
+  border-top-color: var(--wl-accent);
+  border-radius: 50%;
+  animation: wl-spin 0.8s linear infinite;
+}
+
+/* Keep the live status badge clear of the loading pill. */
+body:has(.top-loader.on) .flight-livebadge {
+  top: 62px !important;
+}
+
+@media (max-width: 760px) {
+  .top-loader-pill {
+    top: 62px;
+    font-size: 12px;
+  }
+  body:has(.top-loader.on) .flight-livebadge {
+    top: 106px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-loader-bar::after,
+  .top-loader-spinner {
+    animation-duration: 3s;
+  }
+}
+
+/* ---- Planet extras: dashboards, stats, headlines ----------------------------------------- */
+
+.earth-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 6px;
+}
+.earth-stat {
+  padding: 9px 10px;
+  border: 1px solid var(--wl-border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  min-width: 0;
+}
+.earth-stat span {
+  display: block;
+  font: 600 9.5px/1.3 var(--wl-font);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--wl-text-3);
+}
+.earth-stat strong {
+  display: block;
+  margin: 3px 0 2px;
+  font: 700 15px/1.2 var(--wl-display);
+  color: var(--wl-text);
+}
+.earth-stat small {
+  font-size: 10.5px !important;
+}
+.earth-scales {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.earth-scale {
+  padding: 3px 9px;
+  border-radius: 7px;
+  font: 700 12px var(--wl-font);
+  color: #04201d;
+}
+.earth-scale.low { background: #4fd1a5; }
+.earth-scale.mid { background: #ffd166; }
+.earth-scale.high { background: #ff5a5a; color: #fff; }
+.earth-scale-note {
+  font-size: 10.5px;
+  color: var(--wl-text-3);
+}
+.earth-spark {
+  margin: 0;
+}
+.earth-spark svg {
+  display: block;
+  width: 100%;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.earth-spark figcaption,
+.earth-kp small {
+  font-size: 10.5px;
+  color: var(--wl-text-3);
+}
+.earth-kp {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  align-items: end;
+  gap: 3px;
+  height: 46px;
+}
+.earth-kp span {
+  display: flex;
+  align-items: flex-end;
+  height: 34px;
+}
+.earth-kp i {
+  display: block;
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+}
+.earth-kp small {
+  grid-column: 1 / -1;
+}
+.earth-headlines {
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+}
+.earth-headlines li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--wl-border);
+}
+.earth-headlines a {
+  display: block;
+  color: var(--wl-text);
+  font: 600 13px/1.4 var(--wl-display);
+  text-decoration: none;
+}
+.earth-headlines a:hover {
+  color: var(--wl-accent);
+}
+.earth-headlines small {
+  color: var(--wl-text-3);
+  font-size: 11px;
+}
+
+/* ---- Globe only / in-app full screen ------------------------------------------------------ */
+
+body.globe-only .panel-button,
+body.globe-only .flight-livebadge {
+  display: none !important;
+}
+
+/* In-app full screen: every control hidden except the exit pill. */
+body.immersive .globe-dock,
+body.immersive .panel-button,
+body.immersive .flight-livebadge,
+body.immersive .globenav,
+body.immersive .top-loader,
+body.immersive #toast,
+body.immersive .app > aside,
+body.immersive .directory {
+  display: none !important;
+}
+.immersive-exit {
+  position: fixed;
+  right: 18px;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 10px 13px;
+  border: 1px solid var(--wl-border);
+  border-radius: 999px;
+  background: var(--wl-surface);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--wl-shadow);
+  color: var(--wl-text);
+  font: 600 13px var(--wl-font);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s, border-color 0.2s;
+  animation: wl-pop 0.2s ease-out;
+}
+.immersive-exit:hover,
+.immersive-exit:focus-visible {
+  opacity: 1;
+  border-color: var(--wl-accent);
+}
+.immersive-exit svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: var(--wl-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

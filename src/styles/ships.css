@@ -1,0 +1,67 @@
+/* Ships layer: mirrors the flight-mode panel rules in legacy.css. */
+.ship-directory,
+.ship-viewer {
+  display: none;
+}
+
+.ship-mode .directory > :not(.ship-directory):not(.shell-close) {
+  display: none !important;
+}
+
+.ship-mode .ship-directory {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.globe-first.detail-open .app.ship-mode > .viewer,
+.globe-first.detail-open .app.ship-mode > .satellite-viewer,
+.globe-first.detail-open .app.ship-mode > .flight-viewer {
+  display: none !important;
+}
+
+.globe-first.detail-open .app.ship-mode > .ship-viewer {
+  display: block !important;
+  position: absolute;
+  inset: 18px 80px 100px auto;
+  width: min(360px, calc(100vw - 36px));
+  height: auto;
+  z-index: 12;
+  overflow: auto;
+  padding: 34px 22px 24px;
+  border: 1px solid #3d586b;
+  border-radius: 16px;
+  background: #11202bf0;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 15px 70px #0006;
+}
+
+.ship-viewer h2 {
+  font: 600 24px/1.35 Manrope, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.ship-viewer .stale {
+  color: #e6b47a;
+}
+
+.ship-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 10px;
+  font: 10px/1.6 monospace;
+}
+
+body.globe-first:not(.panels-enabled) .app > .ship-viewer {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  .globe-first.detail-open .app.ship-mode > .ship-viewer {
+    inset: 12px 12px 88px auto;
+    max-width: calc(100vw - 24px);
+  }
+}

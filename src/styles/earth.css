@@ -1,0 +1,234 @@
+/* Earth data mode: mirrors the flight/ship panel rules, plus layer cards and legends. */
+.earth-directory,
+.earth-viewer {
+  display: none;
+}
+
+.earth-mode .directory > :not(.earth-directory):not(.shell-close) {
+  display: none !important;
+}
+
+.earth-mode .earth-directory {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.globe-first.detail-open .app.earth-mode > .viewer,
+.globe-first.detail-open .app.earth-mode > .satellite-viewer,
+.globe-first.detail-open .app.earth-mode > .flight-viewer,
+.globe-first.detail-open .app.earth-mode > .ship-viewer {
+  display: none !important;
+}
+
+.globe-first.detail-open .app.earth-mode > .earth-viewer {
+  display: block !important;
+  position: absolute;
+  inset: 18px 80px 100px auto;
+  width: min(380px, calc(100vw - 36px));
+  height: auto;
+  z-index: 12;
+  overflow: auto;
+  padding: 34px 22px 24px;
+  border: 1px solid #3d586b;
+  border-radius: 16px;
+  background: #11202bf0;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 15px 70px #0006;
+}
+
+body.globe-first:not(.panels-enabled) .app > .earth-viewer {
+  display: none !important;
+}
+
+.earth-viewer h2 {
+  font: 600 22px/1.35 Manrope, sans-serif;
+  margin: 14px 0 6px;
+  overflow-wrap: anywhere;
+}
+
+.earth-viewer .sat-metrics {
+  margin: 14px 0;
+}
+
+.earth-viewer .button.full {
+  margin: 8px 0;
+}
+
+.earth-category {
+  margin-top: 12px;
+  font: 600 11px/1.4 monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.earth-timeline {
+  margin: 8px 0 12px;
+  padding: 0;
+  list-style: none;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.earth-timeline li {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0 6px 12px;
+  border-left: 2px solid #3d586b;
+  font-size: 12px;
+}
+
+.earth-timeline strong {
+  font: 600 11px monospace;
+  color: #cfe3ee;
+}
+
+.earth-timeline span {
+  color: #8fa7b5;
+}
+
+.earth-layers {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px 16px 12px;
+}
+
+.earth-layer {
+  margin: 8px 0;
+  padding: 10px 12px;
+  border: 1px solid #2a3942;
+  border-radius: 12px;
+  background: #152129;
+}
+
+.earth-layer.on {
+  border-color: #3d6076;
+  background: #182a35;
+}
+
+.earth-layer p {
+  margin: 6px 0 0;
+  color: #8fa7b5;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.earth-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.earth-toggle b {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.earth-toggle strong {
+  font: 600 14px Manrope, sans-serif;
+}
+
+.earth-layer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.earth-layer-body select {
+  width: 100%;
+}
+
+.earth-layer-body small {
+  color: #8fa7b5;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.earth-status {
+  font-family: monospace !important;
+  color: #a5c8c8 !important;
+}
+
+.earth-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  font: 10px monospace;
+  color: #8fa7b5;
+}
+
+.earth-legend i {
+  grid-column: 1 / -1;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.earth-legend span:last-child {
+  text-align: right;
+}
+
+.earth-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font: 10px/1.6 monospace;
+  color: #b8cad4;
+}
+
+.earth-swatches b {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+
+.earth-slider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 11px monospace;
+  color: #cfe3ee;
+}
+
+.earth-slider input[type="range"] {
+  flex: 1;
+}
+
+@media (max-width: 760px) {
+  .globe-first.detail-open .app.earth-mode > .earth-viewer {
+    inset: 12px 12px 88px auto;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+.earth-layers .sectionlabel {
+  margin: 16px 0 4px;
+}
+
+.earth-countdown {
+  margin: 4px 0 2px;
+  font: 600 26px/1.2 monospace;
+  color: #ffd36b;
+  letter-spacing: 1px;
+}
+
+.earth-launch-image {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  margin-top: 12px;
+  border-radius: 10px;
+}
+
+.earth-viewer .sourcelink {
+  display: block;
+  margin-top: 6px;
+}
