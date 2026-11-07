@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
+import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/vendor/cesium/Widgets/widgets.css" />
       </head>
-      <body className="globe-first">{children}</body>
+      <body className="globe-first">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
